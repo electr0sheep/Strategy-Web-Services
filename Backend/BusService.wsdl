@@ -1,0 +1,50 @@
+<definitions name="BusService"
+   targetNamespace="http://www.examples.com/wsdl/HelloService.wsdl"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns="http://www.examples.com/wsdl/HelloService.wsdl"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+   <message name="TakeBusRequest">
+    <part name="source" type="xsd:string"/>
+    <part name="destination" type="xsd:string"/>
+   </message>
+   <message name="TakeBusResponse">
+    <part name="message" type="xsd:string"/>
+   </message>
+
+   <portType name="Bus_PortType">
+    <operation name="takeBus">
+       <input message="tns:TakeBusRequest"/>
+       <output message="tns:TakeBusResponse"/>
+    </operation>
+   </portType>
+
+   <binding name="Bus_Binding" type="tns:Bus_PortType">
+   <soap:binding style="rpc"
+    transport="http://schemas.xmlsoap.org/soap/http"/>
+   <operation name="takeBus">
+    <soap:operation soapAction="takeBus"/>
+    <input>
+       <soap:body
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        namespace="urn:examples:busservice"
+        use="encoded"/>
+    </input>
+    <output>
+       <soap:body
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        namespace="urn:examples:busservice"
+        use="encoded"/>
+    </output>
+   </operation>
+   </binding>
+
+   <service name="Bus_Service">
+    <documentation>WSDL File for BusService</documentation>
+    <port binding="tns:Bus_Binding" name="Bus_Port">
+       <soap:address
+        location="http://localhost:8003/wsdl"/>
+    </port>
+   </service>
+</definitions>

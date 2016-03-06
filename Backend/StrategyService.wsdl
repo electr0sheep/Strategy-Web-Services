@@ -1,0 +1,55 @@
+<definitions name="StrategyService"
+   targetNamespace="http://www.examples.com/wsdl/HelloService.wsdl"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns="http://www.examples.com/wsdl/HelloService.wsdl"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+   <message name="StrategyRequest">
+    <part name="source" type="xsd:string"/>
+    <part name="destination" type="xsd:string"/>
+    <part name="taxi" type="xsd:boolean"/>
+    <part name="bus" type="xsd:boolean"/>
+    <part name="shuttle" type="xsd:boolean"/>
+   </message>
+   <message name="StrategyResponse">
+    <part name="taxi" type="xsd:string"/>
+    <part name="shuttle" type="xsd:string"/>
+    <part name="bus" type="xsd:string"/>
+   </message>
+
+   <portType name="Strategy_PortType">
+    <operation name="getOptions">
+       <input message="tns:StrategyRequest"/>
+       <output message="tns:StrategyResponse"/>
+    </operation>
+   </portType>
+
+   <binding name="Strategy_Binding" type="tns:Strategy_PortType">
+   <soap:binding style="rpc"
+    transport="http://schemas.xmlsoap.org/soap/http"/>
+   <operation name="getOptions">
+    <soap:operation soapAction="getOptions"/>
+    <input>
+       <soap:body
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        namespace="urn:examples:strategyservice"
+        use="encoded"/>
+    </input>
+    <output>
+       <soap:body
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        namespace="urn:examples:strategyservice"
+        use="encoded"/>
+    </output>
+   </operation>
+   </binding>
+
+   <service name="Strategy_Service">
+    <documentation>WSDL File for StrategyService</documentation>
+    <port binding="tns:Strategy_Binding" name="Strategy_Port">
+       <soap:address
+        location="http://localhost:8000/wsdl"/>
+    </port>
+   </service>
+</definitions>

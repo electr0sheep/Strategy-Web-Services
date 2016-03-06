@@ -1,0 +1,50 @@
+<definitions name="TaxiService"
+   targetNamespace="http://www.examples.com/wsdl/HelloService.wsdl"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns="http://www.examples.com/wsdl/HelloService.wsdl"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+   <message name="TakeTaxiRequest">
+    <part name="source" type="xsd:string"/>
+    <part name="destination" type="xsd:string"/>
+   </message>
+   <message name="TakeTaxiResponse">
+    <part name="message" type="xsd:string"/>
+   </message>
+
+   <portType name="Taxi_PortType">
+    <operation name="takeTaxi">
+       <input message="tns:TakeTaxiRequest"/>
+       <output message="tns:TakeTaxiResponse"/>
+    </operation>
+   </portType>
+
+   <binding name="Taxi_Binding" type="tns:Taxi_PortType">
+   <soap:binding style="rpc"
+    transport="http://schemas.xmlsoap.org/soap/http"/>
+   <operation name="takeTaxi">
+    <soap:operation soapAction="takeTaxi"/>
+    <input>
+       <soap:body
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        namespace="urn:examples:taxiservice"
+        use="encoded"/>
+    </input>
+    <output>
+       <soap:body
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        namespace="urn:examples:taxiservice"
+        use="encoded"/>
+    </output>
+   </operation>
+   </binding>
+
+   <service name="Taxi_Service">
+    <documentation>WSDL File for TaxiService</documentation>
+    <port binding="tns:Taxi_Binding" name="Taxi_Port">
+       <soap:address
+        location="http://localhost:8001/wsdl"/>
+    </port>
+   </service>
+</definitions>
